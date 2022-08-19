@@ -1,52 +1,22 @@
-console.log('hellow');
-console.log('hellow');
-var form = document.getElementById('addForm');
+
+var filter = document.getElementById('filter');
+
+filter.addEventListener('keyup',filterItems);
 var itemList = document.getElementById('items');
-form.addEventListener('submit', addItem);
-itemList.addEventListener('click', removeItem);
-function addItem(e){
-    e.preventDefault();
 
-    var newItem = document.getElementById('item').value;
-
-    var li = document.createElement('li');
-    li.className = 'list-group-item';
-    li.appendChild(document.createTextNode(newItem));
-    var deleteBtn = document.createElement('button');
-
-  
-    deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
-  
-  
-    deleteBtn.appendChild(document.createTextNode('X'));
-  
+function filterItems(e){
    
-    li.appendChild(deleteBtn);
-  
+    var text = e.target.value.toLowerCase();
    
-    itemList.appendChild(li);
-  
-  
-    itemList.appendChild(li);
-    var editBtn = document.createElement('button');
-
-  
-    editBtn.className = 'btn btn-danger btn-sm float-right delete';
-  
-  
-    editBtn.appendChild(document.createTextNode('edit'));
-  
+    var items = itemList.getElementsByTagName('li');
    
-    li.appendChild(editBtn);
+    Array.from(items).forEach(function(item){
+      var itemName = item.firstChild.textContent;
   
-   
-    itemList.appendChild(li);
-}
-function removeItem(e){
-    if(e.target.classList.contains('delete')){
-      if(confirm('Are You Sure?')){
-        var li = e.target.parentElement;
-        itemList.removeChild(li);
+      if(itemName.toLowerCase().indexOf(text) != -1){
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
       }
-    }
+    });
   }
